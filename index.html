@@ -3,117 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الدخول الآمن</title>
+    <title>InvestPro | منصة الاستثمار الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
-        
-        :root {
-            --primary-yellow: #FFD700;
-            --secondary-yellow: #FFC107;
-            --dark-black: #121212;
-            --light-black: #1E1E1E;
-            --dark-red: #8B0000;
-            --text-color: #FFFFFF;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2E8B57;
+            --secondary: #1F6B42;
+            --admin: #FFD700;
+            --admin-hover: #FFC300;
+            --customer: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4ade80;
+            --warning: #f59e0b;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         body {
-            background-color: var(--dark-black);
-            color: var(--text-color);
+            background: linear-gradient(135deg, #0F4C3A, #2E8B57, #0F4C3A);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
+            color: var(--light);
             overflow-x: hidden;
-            position: relative;
         }
         
-        /* شبكة الخلفية المتحركة */
-        .mesh-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.5;
-            overflow: hidden;
-        }
-        
-        .mesh-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 200%;
-            background: 
-                linear-gradient(45deg, var(--dark-red) 0%, transparent 70%),
-                linear-gradient(135deg, var(--primary-yellow) 10%, transparent 80%),
-                linear-gradient(225deg, var(--light-black) 10%, transparent 80%);
-            background-size: 600% 600%;
-            animation: meshAnimation 15s ease infinite;
-            transform-origin: center;
-        }
-        
-        .mesh-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(139, 0, 0, 0.1) 0%, transparent 40%);
-        }
-        
-        .floating-shapes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-        
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.1;
-            filter: blur(2px);
-        }
-        
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            background: var(--primary-yellow);
-            top: 10%;
-            left: 10%;
-            animation: floatShape 25s infinite ease-in-out;
-        }
-        
-        .shape-2 {
-            width: 200px;
-            height: 200px;
-            background: var(--dark-red);
-            top: 60%;
-            left: 70%;
-            animation: floatShape 20s infinite ease-in-out reverse;
-            animation-delay: 2s;
-        }
-        
-        .shape-3 {
-            width: 150px;
-            height: 150px;
-            background: var(--secondary-yellow);
-            top: 30%;
-            left: 80%;
-            animation: floatShape 15s infinite ease-in-out;
-            animation-delay: 4s;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .container {
@@ -122,505 +51,441 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
-            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease;
+            position: relative;
         }
         
         .logo {
-            margin-bottom: 30px;
-            text-align: center;
-            animation: fadeInDown 1s ease;
-        }
-        
-        .logo h1 {
-            font-size: 2.5rem;
-            color: var(--primary-yellow);
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            margin-bottom: 10px;
-        }
-        
-        .logo p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.1rem;
-        }
-        
-        .form-container {
             display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .logo-icon {
+            font-size: 3.5rem;
+            color: var(--admin);
+            margin-left: 15px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+            animation: pulse 2s infinite;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--admin), var(--customer));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            line-height: 1.6;
+            margin: 0 auto;
+        }
+        
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+        
+        .trust-badge:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .trust-badge i {
+            color: var(--admin);
+            margin-left: 8px;
+        }
+        
+        .login-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
             width: 100%;
             max-width: 900px;
-            background: rgba(30, 30, 30, 0.8);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            animation: zoomIn 0.8s ease;
-            position: relative;
+            margin-top: 20px;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 215, 0, 0.1);
-        }
-        
-        .form-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+            border-radius: 20px;
             width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-yellow), var(--dark-red));
-        }
-        
-        .illustration {
-            flex: 1;
-            background: linear-gradient(135deg, rgba(139, 0, 0, 0.7), rgba(30, 30, 30, 0.7));
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 30px;
-            position: relative;
+            max-width: 400px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
             overflow: hidden;
-        }
-        
-        .illustration::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255, 215, 0, 0.1) 10px,
-                rgba(255, 215, 0, 0.1) 20px
-            );
-            animation: moveBackground 20s linear infinite;
-        }
-        
-        .security-badge {
             position: relative;
-            z-index: 1;
-            text-align: center;
-            width: 100%;
+            animation: fadeInUp 1s ease;
         }
         
-        .security-icon {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 25px;
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
         }
         
-        .shield-base {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-yellow);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: pulseGlow 3s infinite;
-            box-shadow: 0 0 25px var(--primary-yellow);
+        .admin-card {
+            border-top: 5px solid var(--admin);
+            animation-delay: 0.2s;
         }
         
-        .shield-icon {
-            font-size: 3.5rem;
-            color: var(--dark-black);
+        .customer-card {
+            border-top: 5px solid var(--customer);
+            animation-delay: 0.4s;
         }
         
-        .orbiting-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-        
-        .orbit {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 50%;
-        }
-        
-        .orbit-1 {
-            width: 140px;
-            height: 140px;
-            animation: orbitRotate 15s linear infinite;
-        }
-        
-        .orbit-2 {
-            width: 160px;
-            height: 160px;
-            animation: orbitRotate 20s linear infinite reverse;
-        }
-        
-        .orbiting-item {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--primary-yellow);
-            border-radius: 50%;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 0 10px var(--primary-yellow);
-        }
-        
-        .security-badge h3 {
-            font-size: 1.5rem;
+        .card-icon {
+            font-size: 4rem;
             margin-bottom: 25px;
-            color: var(--primary-yellow);
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            transition: var(--transition);
         }
         
-        .security-features {
-            list-style: none;
-            text-align: right;
-            padding: 0;
+        .admin-card .card-icon {
+            color: var(--admin);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            animation: shine 3s infinite;
         }
         
-        .security-features li {
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            opacity: 0;
-            transform: translateX(30px);
-            animation: slideInFeature 0.6s forwards;
+        .customer-card .card-icon {
+            color: var(--customer);
+            text-shadow: 0 0 20px rgba(76, 201, 240, 0.6);
         }
         
-        .security-features li:nth-child(1) { animation-delay: 0.5s; }
-        .security-features li:nth-child(2) { animation-delay: 0.7s; }
-        .security-features li:nth-child(3) { animation-delay: 0.9s; }
-        .security-features li:nth-child(4) { animation-delay: 1.1s; }
-        
-        .security-features li i {
-            color: var(--primary-yellow);
-            margin-left: 12px;
-            font-size: 1.2rem;
-            background: rgba(0, 0, 0, 0.3);
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        .option-card:hover .card-icon {
+            transform: scale(1.1);
         }
         
-        .security-features li span {
-            flex: 1;
-            font-size: 1rem;
-        }
-        
-        .floating-particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-        
-        .particle {
-            position: absolute;
-            background: var(--primary-yellow);
-            border-radius: 50%;
-            opacity: 0.6;
-        }
-        
-        .particle-1 {
-            width: 8px;
-            height: 8px;
-            top: 20%;
-            left: 30%;
-            animation: floatParticle 12s infinite ease-in-out;
-        }
-        
-        .particle-2 {
-            width: 5px;
-            height: 5px;
-            top: 60%;
-            left: 20%;
-            animation: floatParticle 15s infinite ease-in-out;
-            animation-delay: 1s;
-        }
-        
-        .particle-3 {
-            width: 6px;
-            height: 6px;
-            top: 40%;
-            left: 70%;
-            animation: floatParticle 10s infinite ease-in-out;
-            animation-delay: 2s;
-        }
-        
-        .particle-4 {
-            width: 4px;
-            height: 4px;
-            top: 75%;
-            left: 60%;
-            animation: floatParticle 18s infinite ease-in-out;
-            animation-delay: 3s;
-        }
-        
-        .form-section {
-            flex: 1;
-            padding: 40px;
-            background: rgba(30, 30, 30, 0.6);
-        }
-        
-        .form-toggle {
-            display: flex;
-            margin-bottom: 25px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            padding: 5px;
-        }
-        
-        .toggle-btn {
-            flex: 1;
-            padding: 12px;
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-        
-        .toggle-btn.active {
-            background: var(--primary-yellow);
-            color: var(--dark-black);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-        
-        .form {
-            display: none;
-        }
-        
-        .form.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .form-title {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            color: var(--primary-yellow);
-            text-align: center;
-        }
-        
-        .input-group {
-            position: relative;
+        h2 {
+            font-size: 2rem;
             margin-bottom: 20px;
+            font-weight: 700;
         }
         
-        .input-group i {
-            position: absolute;
-            top: 50%;
-            right: 15px;
-            transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .input-group input {
-            width: 100%;
-            padding: 15px 45px 15px 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--text-color);
+        .card-desc {
             font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--primary-yellow);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-        
-        .additional-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .forgot-password {
-            color: var(--primary-yellow);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .forgot-password:hover {
-            color: var(--secondary-yellow);
-            text-decoration: underline;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            opacity: 0.9;
         }
         
         .btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--primary-yellow), var(--secondary-yellow));
-            border: none;
-            border-radius: 8px;
-            color: var(--dark-black);
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+        
+        .admin-btn {
+            background: var(--admin);
+            color: #333;
+            font-weight: 700;
+        }
+        
+        .customer-btn {
+            background: var(--customer);
+            color: white;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            width: 100%;
         }
         
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
         
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 25px 0;
-            color: rgba(255, 255, 255, 0.5);
+        .admin-btn:hover {
+            background: var(--admin-hover);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
         }
         
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.1);
+        .customer-btn:hover {
+            box-shadow: 0 0 25px rgba(76, 201, 240, 0.5);
         }
         
-        .divider span {
-            padding: 0 15px;
+        .btn:active {
+            transform: translateY(1px);
         }
         
-        .social-login {
+        .features {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 50px;
+            animation: fadeIn 1.5s ease;
         }
         
-        .social-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.3);
-            color: var(--text-color);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .social-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            border-color: var(--primary-yellow);
-            color: var(--primary-yellow);
-        }
-        
-        .form-footer {
+        .feature {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 20px;
+            width: 170px;
             text-align: center;
-            margin-top: 20px;
-            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
         }
         
-        .form-footer a {
-            color: var(--primary-yellow);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
+        .feature:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         
-        .form-footer a:hover {
-            color: var(--secondary-yellow);
-            text-decoration: underline;
+        .feature i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--admin);
         }
         
-        .password-strength {
-            height: 5px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            margin-top: 8px;
-            overflow: hidden;
+        .feature h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
         }
         
-        .strength-meter {
-            height: 100%;
-            width: 0;
-            transition: width 0.3s ease, background 0.3s ease;
-            border-radius: 3px;
-        }
-        
-        .strength-meter.weak {
-            width: 33.33%;
-            background: #ff4d4d;
-        }
-        
-        .strength-meter.medium {
-            width: 66.66%;
-            background: #ffa64d;
-        }
-        
-        .strength-meter.strong {
+        .investment-types {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
             width: 100%;
-            background: #00cc66;
         }
         
-        .password-info {
+        .investment-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 20px;
+            width: 180px;
+            text-align: center;
+            transition: var(--transition);
+            border-left: 4px solid var(--admin);
+        }
+        
+        .investment-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .investment-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--customer);
+        }
+        
+        .investment-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--admin);
+        }
+        
+        .investment-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .return-badge {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
             font-size: 0.8rem;
-            margin-top: 5px;
-            color: rgba(255, 255, 255, 0.6);
-            text-align: right;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .testimonials {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .testimonials h2 {
+            margin-bottom: 30px;
+            font-size: 2rem;
+            color: var(--admin);
+        }
+        
+        .testimonial-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 10px;
+            scrollbar-width: none;
+        }
+        
+        .testimonial-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .testimonial {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            min-width: 280px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .testimonial:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .testimonial img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 2px solid var(--admin);
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .testimonial .name {
+            font-weight: bold;
+            color: var(--admin);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 50px;
+            width: 100%;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            width: 200px;
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--admin);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .cta-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 50px;
+            width: 100%;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .cta-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--admin);
+        }
+        
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            width: 100%;
+            animation: fadeIn 2s ease;
         }
         
         /* Animations */
-        @keyframes meshAnimation {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-                background-position: 0% 0%;
-            }
-            50% {
-                transform: translate(-5%, -5%) rotate(5deg);
-                background-position: 100% 100%;
-            }
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-                background-position: 0% 0%;
-            }
-        }
-        
-        @keyframes floatShape {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            25% {
-                transform: translate(-30px, -40px) rotate(5deg);
-            }
-            50% {
-                transform: translate(20px, 30px) rotate(-5deg);
-            }
-            75% {
-                transform: translate(-20px, 20px) rotate(3deg);
-            }
-        }
-        
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -632,331 +497,354 @@
             }
         }
         
-        @keyframes zoomIn {
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: scale(0.9);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
-                transform: scale(1);
+                transform: translateY(0);
             }
         }
         
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
-        @keyframes moveBackground {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(-50%, -50%);
-            }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
         
-        @keyframes pulseGlow {
-            0% {
-                box-shadow: 0 0 15px var(--primary-yellow);
-                transform: scale(1);
-            }
-            50% {
-                box-shadow: 0 0 30px var(--primary-yellow);
-                transform: scale(1.05);
-            }
-            100% {
-                box-shadow: 0 0 15px var(--primary-yellow);
-                transform: scale(1);
-            }
+        @keyframes shine {
+            0% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            50% { text-shadow: 0 0 25px rgba(255, 215, 0, 0.8); }
+            100% { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
         }
         
-        @keyframes orbitRotate {
-            0% {
-                transform: translate(-50%, -50%) rotate(0deg);
-            }
-            100% {
-                transform: translate(-50%, -50%) rotate(360deg);
-            }
-        }
-        
-        @keyframes slideInFeature {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes floatParticle {
-            0%, 100% {
-                transform: translateY(0) translateX(0);
-            }
-            25% {
-                transform: translateY(-20px) translateX(10px);
-            }
-            50% {
-                transform: translateY(10px) translateX(20px);
-            }
-            75% {
-                transform: translateY(20px) translateX(-10px);
-            }
+        @keyframes countUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         
         /* Responsive Design */
-        @media (max-width: 768px) {
-            .form-container {
+        @media (max-width: 900px) {
+            .login-options {
                 flex-direction: column;
+                align-items: center;
             }
             
-            .illustration {
-                display: none;
+            .option-card {
+                max-width: 100%;
             }
             
-            .form-section {
-                width: 100%;
+            h1 {
+                font-size: 2.5rem;
             }
             
-            .logo h1 {
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
                 font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.7rem;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+            
+            .logo-icon {
+                font-size: 2.8rem;
+            }
+            
+            .card-icon {
+                font-size: 3.5rem;
+            }
+            
+            .option-card {
+                padding: 30px 20px;
+            }
+            
+            .investment-types {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .investment-card {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-section {
+                padding: 30px 20px;
             }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="mesh-background">
-        <div class="mesh-layer"></div>
-        <div class="mesh-overlay"></div>
-        <div class="floating-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
-        </div>
-    </div>
-    
     <div class="container">
-        <div class="logo">
-            <h1>نظام الدخول الآمن</h1>
-            <p>أمان وكفاءة في خدمتكم</p>
-        </div>
+        <header>
+            <div class="logo">
+                <i class="fas fa-chart-line logo-icon"></i>
+                <h1>InvestPro</h1>
+            </div>
+            <p class="subtitle">منصة الاستثمار الذكي - استثمر أموالك في مشاريع مربحة عبر منصات عالمية مثل أمازون ونون مع عوائد يومية تصل إلى 2%</p>
+            
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>منصة آمنة ومرخصة</span>
+                </div>
+                <div class="trust-badge">
+                    <i class="fas fa-user-check"></i>
+                    <span>+50,000 مستثمر واثق</span>
+                </div>
+                <div class="trust-badge">
+                    <i class="fas fa-trophy"></i>
+                    <span>جائزة أفضل منصة استثمار 2024</span>
+                </div>
+            </div>
+        </header>
         
-        <div class="form-container">
-            <div class="illustration">
-                <div class="security-badge">
-                    <div class="security-icon">
-                        <div class="shield-base">
-                            <i class="fas fa-shield-alt shield-icon"></i>
-                        </div>
-                        <div class="orbiting-elements">
-                            <div class="orbit orbit-1">
-                                <div class="orbiting-item"></div>
-                            </div>
-                            <div class="orbit orbit-2">
-                                <div class="orbiting-item"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <h3>أعلى معايير الأمان</h3>
-                    <ul class="security-features">
-                        <li><i class="fas fa-lock"></i> <span>تشفير متقدم للبيانات</span></li>
-                        <li><i class="fas fa-fingerprint"></i> <span>مصادقة متعددة العوامل</span></li>
-                        <li><i class="fas fa-user-shield"></i> <span>حماية من الهجمات الإلكترونية</span></li>
-                        <li><i class="fas fa-database"></i> <span>نسخ احتياطية منتظمة</span></li>
-                    </ul>
-                </div>
-                
-                <div class="floating-particles">
-                    <div class="particle particle-1"></div>
-                    <div class="particle particle-2"></div>
-                    <div class="particle particle-3"></div>
-                    <div class="particle particle-4"></div>
-                </div>
+        <div class="login-options">
+            <div class="option-card admin-card">
+                <i class="fas fa-crown card-icon"></i>
+                <h2>لوحة الإدارة</h2>
+                <p class="card-desc">الدخول إلى لوحة التحكم الإدارية لمتابعة الاستثمارات، إدارة المحافظ، وتتبع الأداء المالي للمنصة.</p>
+                <a href="loginadmin.php" class="btn admin-btn">
+                    <i class="fas fa-sign-in-alt"></i> دخول الإدارة
+                </a>
             </div>
             
-            <div class="form-section">
-                <div class="form-toggle">
-                    <button class="toggle-btn active" id="loginToggle">تسجيل الدخول</button>
-                    <button class="toggle-btn" id="registerToggle">إنشاء حساب</button>
-                </div>
-                
-                <form class="form active" id="loginForm">
-                    <h2 class="form-title">مرحباً بعودتك</h2>
-                    
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input type="text" placeholder="اسم المستخدم أو البريد الإلكتروني" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="loginPassword" placeholder="كلمة المرور" required>
-                    </div>
-                    
-                    <div class="additional-options">
-                        <label class="remember-me">
-                            <input type="checkbox"> تذكرني
-                        </label>
-                        <a href="#" class="forgot-password">نسيت كلمة المرور؟</a>
-                    </div>
-                    
-                    <button type="submit" class="btn">تسجيل الدخول</button>
-                    
-                    <div class="divider">
-                        <span>أو</span>
-                    </div>
-                    
-                    <div class="social-login">
-                        <button class="social-btn"><i class="fab fa-google"></i></button>
-                        <button class="social-btn"><i class="fab fa-facebook-f"></i></button>
-                        <button class="social-btn"><i class="fab fa-twitter"></i></button>
-                    </div>
-                    
-                    <p class="form-footer">
-                        ليس لديك حساب؟ <a href="#" id="goToRegister">سجل الآن</a>
-                    </p>
-                </form>
-                
-                <form class="form" id="registerForm">
-                    <h2 class="form-title">إنشاء حساب جديد</h2>
-                    
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input type="text" placeholder="الاسم الكامل" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <i class="fas fa-phone"></i>
-                        <input type="tel" placeholder="رقم الهاتف" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" placeholder="البريد الإلكتروني" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="registerPassword" placeholder="كلمة المرور" required onkeyup="checkPasswordStrength(this.value)">
-                        <div class="password-strength">
-                            <div class="strength-meter" id="passwordStrengthMeter"></div>
-                        </div>
-                        <div class="password-info" id="passwordInfo">أدخل كلمة مرور قوية</div>
-                    </div>
-                    
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="تأكيد كلمة المرور" required>
-                    </div>
-                    
-                    <button type="submit" class="btn">إنشاء حساب</button>
-                    
-                    <p class="form-footer">
-                        لديك حساب بالفعل؟ <a href="#" id="goToLogin">سجل الدخول</a>
-                    </p>
-                </form>
+            <div class="option-card customer-card">
+                <i class="fas fa-user card-icon"></i>
+                <h2>دخول المستثمرين</h2>
+                <p class="card-desc">ادخل إلى حسابك الاستثماري، تابع أرباحك اليومية، واستثمر في مشاريع جديدة عبر منصات عالمية موثوقة.</p>
+                <a href="login.php" class="btn customer-btn">
+                    <i class="fas fa-sign-in-alt"></i> دخول المستثمرين
+                </a>
             </div>
         </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" data-count="50000">0</div>
+                <div class="stat-label">مستثمر نشط</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-count="250">0</div>
+                <div class="stat-label">مليون دولار مستثمر</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-count="98">0</div>
+                <div class="stat-label">% معدل رضا العملاء</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-count="5">0</div>
+                <div class="stat-label">سنوات من الخبرة</div>
+            </div>
+        </div>
+        
+        <div class="investment-types">
+            <div class="investment-card">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>مبيعات المتاجر</h3>
+                <p>استثمار في مبيعات أمازون ونون</p>
+                <div class="return-badge">عائد يومي 2%</div>
+            </div>
+            <div class="investment-card">
+                <i class="fas fa-building"></i>
+                <h3>استثمار عقاري</h3>
+                <p>محافظ عقارية متنوعة</p>
+                <div class="return-badge">عائد شهري 5-8%</div>
+            </div>
+            <div class="investment-card">
+                <i class="fas fa-chart-bar"></i>
+                <h3>سوق الأسهم</h3>
+                <p>استثمار في البورصات العالمية</p>
+                <div class="return-badge">عائد متغير</div>
+            </div>
+            <div class="investment-card">
+                <i class="fas fa-coins"></i>
+                <h3>العملات الرقمية</h3>
+                <p>تداول العملات المشفرة</p>
+                <div class="return-badge">عائد مرتفع</div>
+            </div>
+        </div>
+        
+        <div class="testimonials">
+            <h2>ماذا يقول مستثمرونا؟</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="مستثمر">
+                    <p>"لقد زادت أرباحي بنسبة 40% منذ أن بدأت الاستثمار مع InvestPro. المنصة سهلة الاستخدام والخدمة ممتازة."</p>
+                    <div class="name">أحمد السيد</div>
+                </div>
+                <div class="testimonial">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="مستثمر">
+                    <p>"كنت مترددة في البداية، ولكن بعد 6 أشهر من الاستثمار، أنا سعيدة جدًا بالقرار. العوائد تصل بانتظام."</p>
+                    <div class="name">فاطمة محمد</div>
+                </div>
+                <div class="testimonial">
+                    <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="مستثمر">
+                    <p>"أفضل منصة استثمارية جربتها. الشفافية والدعم الفني الممتاز جعلاني أواصل الاستثمار معهم."</p>
+                    <div class="name">خالد العلي</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-lock"></i>
+                <h3>أمان متكامل</h3>
+                <p>حماية كاملة للأموال</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-chart-pie"></i>
+                <h3>توزيع أرباح</h3>
+                <p>يومي مباشر للحساب</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-globe"></i>
+                <h3>استثمار عالمي</h3>
+                <p>في أسواق متنوعة</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-headset"></i>
+                <h3>دعم فني</h3>
+                <p>24/7 على مدار الساعة</p>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>ابدأ رحلتك الاستثمارية اليوم!</h2>
+            <p>انضم إلى آلاف المستثمرين الناجحين وابدأ في تحقيق أرباح حقيقية من استثماراتك. سجل الآن واحصل على استشارة مجانية.</p>
+            <div class="cta-buttons">
+                <a href="register.php" class="btn customer-btn" style="background: var(--warning);">
+                    <i class="fas fa-user-plus"></i> سجل حساب جديد
+                </a>
+                <a href="login.php" class="btn admin-btn">
+                    <i class="fas fa-sign-in-alt"></i> دخول المستثمرين
+                </a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 InvestPro Platform. كل الحقوق محفوظة.</p>
+            <p>منصة الاستثمار الآمن في الأسواق العالمية</p>
+        </footer>
     </div>
 
     <script>
-        // تبديل النماذج
-        const loginToggle = document.getElementById('loginToggle');
-        const registerToggle = document.getElementById('registerToggle');
-        const loginForm = document.getElementById('loginForm');
-        const registerForm = document.getElementById('registerForm');
-        const goToRegister = document.getElementById('goToRegister');
-        const goToLogin = document.getElementById('goToLogin');
-        
-        loginToggle.addEventListener('click', () => {
-            loginForm.classList.add('active');
-            registerForm.classList.remove('active');
-            loginToggle.classList.add('active');
-            registerToggle.classList.remove('active');
-        });
-        
-        registerToggle.addEventListener('click', () => {
-            registerForm.classList.add('active');
-            loginForm.classList.remove('active');
-            registerToggle.classList.add('active');
-            loginToggle.classList.remove('active');
-        });
-        
-        goToRegister.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerToggle.click();
-        });
-        
-        goToLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginToggle.click();
-        });
-        
-        // التحقق من قوة كلمة المرور
-        function checkPasswordStrength(password) {
-            const strengthMeter = document.getElementById('passwordStrengthMeter');
-            const passwordInfo = document.getElementById('passwordInfo');
+        // Simple animations on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const options = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
             
-            // إعادة تعيين العداد
-            strengthMeter.className = 'strength-meter';
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = `fadeInUp 0.8s ease forwards`;
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, options);
             
-            if (password.length === 0) {
-                passwordInfo.textContent = 'أدخل كلمة مرور قوية';
-                return;
-            }
-            
-            // اختبار قوة كلمة المرور
-            let strength = 0;
-            
-            // إذا كانت تحتوي على أحرف صغيرة وكبيرة
-            if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
-                strength += 1;
-            }
-            
-            // إذا كانت تحتوي على أرقام
-            if (password.match(/([0-9])/)) {
-                strength += 1;
-            }
-            
-            // إذا كانت تحتوي على رموز خاصة
-            if (password.match(/([!,@,#,$,%,^,&,*,?,_,~])/)) {
-                strength += 1;
-            }
-            
-            // إذا كانت طويلة بما فيه الكفاية
-            if (password.length > 7) {
-                strength += 1;
-            }
-            
-            // تحديث واجهة المستخدم بناءً على القوة
-            switch(strength) {
-                case 0:
-                case 1:
-                    strengthMeter.classList.add('weak');
-                    passwordInfo.textContent = 'كلمة المرور ضعيفة';
-                    break;
-                case 2:
-                    strengthMeter.classList.add('medium');
-                    passwordInfo.textContent = 'كلمة المرور متوسطة';
-                    break;
-                case 3:
-                case 4:
-                    strengthMeter.classList.add('strong');
-                    passwordInfo.textContent = 'كلمة المرور قوية';
-                    break;
-            }
-        }
-        
-        // منع إرسال النماذج (لأغراض العرض فقط)
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('تم إرسال الطلب بنجاح! (هذه رسالة تجريبية)');
+            // Observe elements
+            document.querySelectorAll('.option-card, .feature, .investment-card, .stat-card, .testimonial').forEach(el => {
+                observer.observe(el);
             });
+            
+            // زر الإدارة يتألق عند التحميل
+            const adminBtn = document.querySelector('.admin-btn');
+            setTimeout(() => {
+                adminBtn.style.boxShadow = '0 0 25px rgba(255, 215, 0, 0.7)';
+                setTimeout(() => {
+                    adminBtn.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.2)';
+                }, 1000);
+            }, 1500);
+            
+            // عرض العوائد بشكل متحرك
+            const returnBadges = document.querySelectorAll('.return-badge');
+            returnBadges.forEach(badge => {
+                badge.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    badge.style.transition = 'transform 0.5s ease';
+                    badge.style.transform = 'scale(1)';
+                }, 1000);
+            });
+            
+            // عدادات الإحصائيات
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const target = parseInt(stat.getAttribute('data-count'));
+                const duration = 2000; // 2 seconds
+                const step = target / (duration / 16); // 60fps
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    stat.textContent = Math.floor(current).toLocaleString();
+                }, 16);
+            });
+            
+            // شريط التمرير للشهادات
+            const slider = document.querySelector('.testimonial-slider');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+            
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+            
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+            
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+            
+            // إضافة تأثيرات إضافية للزر الجديد
+            const registerBtn = document.querySelector('.cta-buttons .customer-btn');
+            setTimeout(() => {
+                registerBtn.style.animation = 'pulse 2s infinite';
+            }, 3000);
         });
     </script>
 </body>
